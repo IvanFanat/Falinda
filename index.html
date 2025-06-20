@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Falinda</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    
+    @media (min-width: 992px) {
+    .navbar-collapse.d-lg-none {
+        display: none !important;
+    }
+}
+</style>
+<body>
+    <div class="modal fade" id="thankModal" tabindex="-1" aria-labelledby="thankModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4" style="border-radius:0; border:none;">
+            <button type="button" class="btn-close position-absolute end-0 m-3" data-bs-dismiss="modal" aria-label="Close" style="font-size: 0.6rem;"></button>
+            <div class="modal-body text-center py-5">
+                <h3 class="mb-3" style="letter-spacing: 1px;">СПАСИБО!</h3>
+                <div class="mb-1" style="letter-spacing: 1px;">МЫ СВЯЖЕМСЯ С ВАМИ В БЛИЖАЙШЕЕ ВРЕМЯ</div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4" style="border-radius:0; border:none;">
+      <button type="button" class="btn-close position-absolute end-0 m-3" data-bs-dismiss="modal" aria-label="Close" style="font-size:0.6rem;"></button>
+      <div class="modal-body">
+        <form class="validateForm" autocomplete="off">
+          <p class="text-center" style="letter-spacing:1px;"><strong>ХОТИТЕ СДЕЛАТЬ ЗАКАЗ?</strong></p>
+          <h3 class="mb-4 text-center" style="letter-spacing:1px;">Заполните форму ниже.</h3>
+          <div class="mb-3">
+            <input type="text" name="username" class="form-control" placeholder="Ваше имя" required>
+          </div>
+          <div class="mb-3">
+            <input type="tel" name="userphone" class="form-control userphone" placeholder="+7 (___) ___-__-__" required>
+            <div class="phoneWarn" style="color:red; display:none;">Пожалуйста, заполните телефон полностью</div>
+          </div>
+          <div class="mb-3">
+            <input type="email" name="usermail" class="form-control usermail" placeholder="Ваш E-mail" required>
+            <div class="emailWarn" style="color:red; display:none;">Пожалуйста, введите корректный email</div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="order-btn btn btn-dark px-5">ОТПРАВИТЬ</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+    <nav class="navbar navbar-expand-lg navbar-light header-custom">
+        <div class="container">
+            <div class="d-none d-lg-flex w-50">
+                <ul class="navbar-nav left me-auto flex-row gap-4">
+                    <li class="nav-item"><a href="#main" class="nav-link">Главная</a></li>
+                    <li class="nav-item"><a href="#spring-coll" class="nav-link">Весна 2025</a></li>
+                    <li class="nav-item"><a href="#autumn-coll" class="nav-link">Осень 2025</a></li>
+                </ul>
+            </div>
+            <a class="navbar-nav mx-auto" href="#">
+                <svg width="243" height="29" viewBox="0 0 243 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 1.20601H0.666073C2.33384 1.20601 3.54594 1.58288 4.33335 2.35674C5.12076 3.12306 5.51834 4.30896 5.51834 5.9132V23.4468C5.51834 25.0435 5.12076 26.2231 4.32689 26.997C3.53174 27.7708 2.31318 28.1615 0.666073 28.1615H0V28.8876H17.6806V28.1615H15.9858C14.3554 28.1615 13.1343 27.7721 12.3404 26.997C11.553 26.2231 11.149 25.0435 11.149 23.4468V14.5135H12.4695C14.491 14.5135 16.0516 15.1618 17.1294 16.4582C17.6425 17.0622 18.0475 17.746 18.3273 18.4808C18.6333 19.2421 18.8747 20.2597 19.0722 21.5436H19.7821V6.68078H19.1147C18.6823 9.19078 17.9659 11.0111 16.9732 12.1342C15.987 13.2573 14.6046 13.8226 12.8309 13.8226H11.149V1.20601H17.4689C19.0502 1.20601 20.4611 1.42208 21.7029 1.8467C22.9141 2.27031 24.0155 2.94647 24.93 3.82782C25.8374 4.71348 26.6107 5.84411 27.2406 7.21092C27.4613 7.65061 27.6885 8.2712 27.9221 9.07269C28.1493 9.87544 28.3546 10.7611 28.5469 11.7297H29.1781V0.508784H0V1.20601ZM62.9026 27.8487C62.363 27.6477 61.8867 27.3123 61.4543 26.8512C60.9806 26.3304 60.591 25.7424 60.299 25.1076L48.391 0H47.681L38.0501 21.0838C36.767 23.8953 35.4464 25.806 34.1001 26.8173C33.5244 27.257 33.0145 27.5635 32.5459 27.7444C32.0851 27.9392 31.4539 28.0723 30.6665 28.1565V28.8814H41.5186V28.1565C41.125 28.1412 40.7335 28.0946 40.3478 28.017C40.0199 27.9201 39.7056 27.7843 39.4119 27.6125C38.8943 27.3324 38.4825 26.9078 38.1495 26.3638C37.8306 25.7985 37.659 25.2332 37.659 24.6616C37.659 23.9995 37.8009 23.3362 38.0785 22.6817L40.0999 18.315H51.4116L53.0212 21.6905C53.1142 21.8576 53.1994 22.026 53.2768 22.1993C53.3543 22.3677 53.4059 22.4933 53.4472 22.5699C54.072 23.8739 54.476 24.7659 54.6606 25.2545C54.8439 25.757 54.9368 26.1678 54.9368 26.5171C54.9368 27.0749 54.7032 27.4869 54.2346 27.7444C53.7738 28.0233 53.0367 28.1565 52.0286 28.1565H50.0071V28.8814H65.4972V28.1565H64.7872C64.0579 28.1565 63.4331 28.051 62.9026 27.8487ZM40.433 17.6316L45.6609 6.06772L51.0295 17.6316H40.433ZM96.9382 20.575C96.569 21.4883 96.1856 22.2697 95.7751 22.9116C95.3711 23.5523 94.8948 24.2081 94.3552 24.8576C93.5019 25.8891 92.4274 26.7269 91.2068 27.3123C90.0151 27.8969 88.6986 28.2003 87.364 28.198H80.4412V5.91446C80.4412 4.31022 80.8388 3.12557 81.6249 2.35799C82.4124 1.59042 83.6322 1.20726 85.2651 1.20726H87.2078V0.523859H69.016V1.20726H69.9661C73.1932 1.20726 74.8106 2.78261 74.8106 5.91446V23.448C74.8106 26.6138 73.1932 28.1967 69.9661 28.1967H68.9657L69.016 28.8876H98.7389V17.4155H98.0225C97.6752 18.6089 97.3138 19.6541 96.9382 20.575ZM202.408 4.79011C200.932 3.34039 199.131 2.26503 196.989 1.56153C194.839 0.870586 192.329 0.508784 189.457 0.508784H171.754V1.20601H172.726C174.378 1.20601 175.606 1.58288 176.393 2.35674C177.181 3.12306 177.57 4.30896 177.57 5.9132V23.4468C177.57 25.0435 177.181 26.2231 176.385 26.997C175.584 27.7708 174.372 28.1615 172.726 28.1615H171.754V28.8876H190.719C192.974 28.8876 195.088 28.5798 197.031 27.9593C198.982 27.3525 200.337 26.4806 201.754 25.3588C203.138 24.2732 204.261 22.9068 205.046 21.3551C205.826 19.8062 206.209 16.8979 206.209 15.0776C206.209 13.4244 205.854 10.5865 205.131 9.01742C204.415 7.44709 203.727 6.03255 202.408 4.79011ZM196.761 25.693C196.189 26.285 195.512 26.7715 194.762 27.1289C194.003 27.4995 193.102 27.757 192.081 27.9178C191.066 28.0774 189.826 28.1615 188.364 28.1615H183.209V1.20601H188.024C189.457 1.20601 190.691 1.28892 191.719 1.44344C192.74 1.61052 193.641 1.86805 194.421 2.23111C195.208 2.60045 195.911 3.0816 196.535 3.67581C197.297 4.4195 197.929 5.27867 198.407 6.21973C198.896 7.18328 199.28 8.29884 199.542 9.56137C199.805 10.8302 199.932 13.4043 199.932 14.8201C199.932 19.1642 198.882 23.6013 196.761 25.693ZM241.969 28.1565C241.239 28.1565 240.614 28.051 240.082 27.8487C239.525 27.633 239.029 27.2911 238.635 26.8512C238.21 26.3915 237.827 25.8199 237.48 25.1076L225.578 0H224.869L215.231 21.0838C213.946 23.8877 212.627 25.806 211.279 26.8249C210.699 27.2558 210.187 27.5635 209.72 27.7444C209.259 27.9329 208.628 28.0723 207.841 28.1565V28.8814H218.706V28.1565C218.31 28.142 217.916 28.0954 217.528 28.017C217.202 27.9213 216.89 27.7854 216.599 27.6125C216.069 27.3144 215.63 26.8832 215.33 26.3638C215.011 25.7985 214.841 25.2332 214.841 24.6616C214.841 23.9995 214.983 23.3362 215.266 22.6817L217.287 18.315H228.586L230.202 21.6905C230.301 21.8576 230.372 22.026 230.457 22.1993L230.628 22.5699C231.253 23.8739 231.657 24.7659 231.848 25.2621C232.025 25.757 232.117 26.1678 232.117 26.5171C232.117 27.0749 231.884 27.4869 231.422 27.7444C230.961 28.0233 230.216 28.1565 229.217 28.1565H227.195V28.8814H242.678V28.1565H241.969ZM217.614 17.6316L222.84 6.06144L228.202 17.6316H217.614ZM113.158 0.523859H105.753V1.20726H106.492C108.136 1.20726 109.357 1.59042 110.145 2.36428C110.923 3.12431 111.328 4.31148 111.328 5.922V23.448C111.328 25.0447 110.923 26.2244 110.129 26.9982C109.335 27.7721 108.122 28.1628 106.492 28.1628H105.753V28.8876H122.547V28.1628H121.811C120.18 28.1628 118.974 27.7733 118.171 26.9982C117.377 26.2244 116.981 25.0447 116.981 23.448V5.922C116.981 4.31022 117.371 3.12431 118.165 2.36428C118.96 1.59042 120.166 1.20726 121.81 1.20726H122.548V0.523859H113.158ZM152.407 1.20726C153.286 1.26254 153.974 1.36053 154.463 1.48615C154.954 1.61178 155.443 1.82032 155.924 2.11428C156.825 2.6507 157.513 3.42456 157.988 4.44338C158.471 5.46095 158.713 6.6544 158.713 8.0212V25.0246L139.102 0.523859H128.988V1.2148H128.966C130.754 1.2148 132.35 1.91077 133.464 3.13813L133.825 3.57782C134.619 4.64564 135.094 6.03255 135.094 7.6795V22.5762C135.094 23.7897 134.882 24.801 134.456 25.6163C134.024 26.4404 133.364 27.0472 132.471 27.4656C131.57 27.8839 130.414 28.1276 128.988 28.198V28.8889H142.91V28.198C141.903 28.1628 141.144 28.1 140.612 28.0158C139.648 27.8977 138.825 27.6465 138.151 27.2558C137.332 26.7574 136.698 26.017 136.342 25.1427C135.989 24.2433 135.79 23.0573 135.79 21.5586V5.96345L154.641 28.8876H163.606V28.1967H163.649C160.946 28.1967 159.45 27.0673 159.45 23.7621V8.15939C159.45 5.8931 159.953 4.17706 160.96 2.98487C161.975 1.80022 163.436 1.20726 165.358 1.20726H165.62V0.523859H152.407V1.20726Z" fill="black"/>
+                </svg>
+            </a>
+            <div class="d-none d-lg-flex w-50 justify-content-end">
+                <ul class="navbar-nav right ms-auto flex-row gap-4">
+                    <li class="nav-item"><a href="#about-us" class="nav-link">О нас</a></li>
+                    <li class="nav-item"><a href="#contacts" class="nav-link">Контакты</a></li>
+                    <li class="nav-item"><a href="#" id="feedback-form" class="nav-link" data-bs-toggle="modal" data-bs-target="#orderModal">Сделать заказ</a></li>
+                </ul>
+            </div>
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-lg-none" id="navbarContent">
+                <ul class="navbar-nav mx-auto d-lg-none text-center">
+                    <li class="nav-item"><a href="#main" class="nav-link">Главная</a></li>
+                    <li class="nav-item"><a href="#spring-coll" class="nav-link">Весна 2025</a></li>
+                    <li class="nav-item"><a href="#autumn-coll" class="nav-link">Осень 2025</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="nav-item"><a href="#about-us" class="nav-link">О нас</a></li>
+                    <li class="nav-item"><a href="#contacts" class="nav-link">Контакты</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#orderModal">Сделать заказ</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container hero-section mb-5" id="main">
+        <div class="row">
+            <div class="col-lg-6 col-12 position-relative d-flex flex-column justify-content-center align-items-start hero-text">
+                <div class="small-title mb-2 end-0">НОВАЯ</div>
+                <div class="big-title end-0">КОЛЛЕКЦИЯ</div>
+                <div class="title end-0">ЭЛЕГАНТНОСТЬ</div>
+                <div class="subtitle mb-2 end-0">ВДОХНОВЕНИЕ</div>
+            </div>
+            <div class="col-lg-6 col-12 d-flex align-items-center">
+                <div class="image">
+                    <img src="assets/img/main.png" alt="">
+                </div>
+            </div>
+            <div class="col-6">
+                <button class="hero-btn mt-3" data-bs-toggle="modal" data-bs-target="#orderModal">СДЕЛАТЬ ЗАКАЗ</button>
+            </div>
+        </div>
+    </div>
+    <div class="container py-4" id="spring-coll">
+        <div class="title">ВЕСНА 2025</div>
+        <div class="row d-lg-flex d-none align-items-center gx-lg-2">
+            <div class="col-2">
+                <div class="collection-img img-sm">
+                    <img src="assets/img/1.png" class="img-fluid h-100" style="object-fit:cover;">
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="collection-img img-md">
+                    <img src="assets/img/1.png" class="img-fluid h-100" style="object-fit:cover;">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="collection-img img-lg">
+                    <img src="assets/img/2.png" class="img-fluid h-100" style="object-fit:cover;">
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="collection-img img-md">
+                    <img src="assets/img/3.png" class="img-fluid h-100" style="object-fit:cover;">
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="collection-img img-sm">
+                    <img src="assets/img/3.png" class="img-fluid h-100" style="object-fit:cover;">
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex d-lg-none mb-2">
+            <div class="col-6">
+                <div class="collection-img">
+                    <img src="assets/img/1.png" class="img-fluid" style="object-fit:cover;">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="collection-img">
+                    <img src="assets/img/2.png" class="img-fluid" style="object-fit:cover;">
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex d-lg-none">
+            <div class="col-6">
+                <div class="collection-img">
+                    <img src="assets/img/3.png" class="img-fluid" style="object-fit:cover;">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="collection-img">
+                    <img src="assets/img/1.png" class="img-fluid" style="object-fit:cover;">
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 d-flex justify-content-center">
+                <button class="order-btn" data-bs-toggle="modal" data-bs-target="#orderModal">СДЕЛАТЬ ЗАКАЗ</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-lg-5" id="about-us">
+        <div class="row">
+            <div class="col mt-5">
+                <div class="title">О НАС</div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-9" style='margin-bottom: 127px;'>
+                <p class="">Добро пожаловать в магазин одежды Falinda в Чебоксарах! Мы предлагаем стильную и качественную одежду, которая поможет вам подчеркнуть вашу индивидуальность.<br><br>
+                В нашем ассортименте – разнообразные коллекции от классики до современных трендов, подобранные с заботой о каждом клиенте. Мы гордимся тем, что поддерживаем местные инициативы и стремимся создать уютную атмосферу для шопинга.<br><br>
+                Следите за нашими новинками и акциями, и найдите свой идеальный стиль в Falinda!</p>
+            </div>
+        </div>
+    </div>
+    <div class="container feedback mt-lg-5 mt-4">
+        <div class="row">
+            <div class="col">
+                <div class="title">ХОТИТЕ СОТРУДНИЧАТЬ С НАМИ?</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p style="text-align: center;">Оставьте свой номер телефона и E-mail, и мы свяжемся с вами!</p>
+            </div>
+        </div>
+        <form class="validateForm">
+            <div class="row justify-content-center mt-3">
+                <div class="col-lg-4 text-center col-12 mb-lg-0 mb-3 meta-dates">
+                    <input type="text" name="username" class="username" placeholder="Ваше имя" required>
+                </div>
+                <div class="col-lg-4 text-center col-12  mb-lg-0 mb-3 meta-dates">
+                    <input type="tel" name="userphone" class="userphone" placeholder="+7 (___) ____-__-__" required>
+                    <div class="phoneWarn" style="color:red; display:none;">Пожалуйста, заполните телефон полностью</div>
+                </div>
+                <div class="col-lg-4 text-center col-12 mb-lg-0 mb-3 meta-dates">
+                    <input type="email" name="usermail" class="usermail" placeholder="Ваш E-mail" required>
+                    <div class="emailWarn" style="color:red; display:none;">Пожалуйста, введите корректный email</div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 d-flex justify-content-center">
+                    <button class="order-btn" type="submit">ОТПРАВИТЬ</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container py-4 mt-lg-5" id="autumn-coll">
+        <div class="title">ОСЕНЬ 2025</div>
+        <div class="row d-lg-flex d-none align-items-center gx-2">
+            <div class="col-2">
+                <div class="collection-img img-sm">
+                    <img src="assets/img/1.png" class="img-fluid h-100" style="object-fit:cover;">
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="collection-img img-md">
+                    <img src="assets/img/1.png" class="img-fluid h-100" style="object-fit:cover;">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="collection-img img-lg">
+                    <img src="assets/img/2.png" class="img-fluid h-100" style="object-fit:cover;">
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="collection-img img-md">
+                    <img src="assets/img/3.png" class="img-fluid h-100" style="object-fit:cover;">
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="collection-img img-sm">
+                    <img src="assets/img/3.png" class="img-fluid h-100" style="object-fit:cover;">
+                </div>
+            </div>
+        </div>
+         <div class="row d-flex d-lg-none mb-2">
+            <div class="col-6">
+                <div class="collection-img">
+                    <img src="assets/img/1.png" class="img-fluid" style="object-fit:cover;">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="collection-img">
+                    <img src="assets/img/2.png" class="img-fluid" style="object-fit:cover;">
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex d-lg-none">
+            <div class="col-6">
+                <div class="collection-img">
+                    <img src="assets/img/3.png" class="img-fluid" style="object-fit:cover;">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="collection-img">
+                    <img src="assets/img/1.png" class="img-fluid" style="object-fit:cover;">
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 d-flex justify-content-center">
+                <button class="order-btn" type="button" data-bs-toggle="modal" data-bs-target="#orderModal">СДЕЛАТЬ ЗАКАЗ</button>
+            </div>
+        </div>
+    </div>
+    <div class="container feedback mb-5 mt-lg-5 mt-4" id="ord-req" style="border: 2px solid black">
+        <div class="row">
+            <div class="col">
+                <div class="title">ХОТИТЕ СДЕЛАТЬ ЗАКАЗ ИЛИ ОСТАЛИСЬ ВОПРОСЫ?</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p style="text-align: center;">Заполните форму, и мы свяжемся с Вами в ближайшее время!</p>
+            </div>
+        </div>
+        <form class="validateForm">
+            <div class="row justify-content-center mt-3">
+                <div class="col-lg-4 text-center col-12 mb-lg-0 mb-3 meta-dates">
+                    <input type="text" name="username" class="username" placeholder="Ваше имя">
+                </div>
+                <div class="col-lg-4 text-center col-12 mb-lg-0 mb-3 meta-dates">
+                    <input type="tel" name="userphone" class="userphone" placeholder="+7 (___) ____-__-__">
+                    <div class="phoneWarn" style="color:red; display:none;">Пожалуйста, заполните телефон полностью</div>
+                </div>
+                <div class="col-lg-4 text-center col-12 mb-lg-0 mb-3 meta-dates">
+                    <input type="email" name="usermail" class="usermail" placeholder="Ваш E-mail">
+                    <div class="emailWarn" style="color:red; display:none;">Пожалуйста, введите корректный email</div>
+                </div>
+            </div>
+            <div class="row mt-4 mb-4">
+                <div class="col-12 d-flex justify-content-center">
+                    <button class="order-btn" type="submit">ОТПРАВИТЬ</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container contacts mt-5" id="contacts">
+        <div class="row">
+            <div class="col">
+                <h1 class="for-footer">КОНТАКТЫ</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col gap-3 d-flex">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.275 10.4875C7.075 14.025 9.975 16.9125 13.5125 18.725L16.2625 15.975C16.6 15.6375 17.1 15.525 17.5375 15.675C18.9375 16.1375 20.45 16.3875 22 16.3875C22.6875 16.3875 23.25 16.95 23.25 17.6375V22C23.25 22.6875 22.6875 23.25 22 23.25C10.2625 23.25 0.75 13.7375 0.75 2C0.75 1.3125 1.3125 0.75 2 0.75H6.375C7.0625 0.75 7.625 1.3125 7.625 2C7.625 3.5625 7.875 5.0625 8.3375 6.4625C8.475 6.9 8.375 7.3875 8.025 7.7375L5.275 10.4875Z" fill="black"/>
+                </svg>
+                <a href="tel:8 800 770-02-27"><p>8 800 770-02-27</p></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col gap-3 d-flex">
+                <svg width="26" height="20" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M23 0H3C1.625 0 0.5125 1.125 0.5125 2.5L0.5 17.5C0.5 18.875 1.625 20 3 20H23C24.375 20 25.5 18.875 25.5 17.5V2.5C25.5 1.125 24.375 0 23 0ZM23 5L13 11.25L3 5V2.5L13 8.75L23 2.5V5Z" fill="black"/>
+                </svg>
+                <a href="mailto:Falindasales@yandex.ru"><p>Falindasales@yandex.ru</p></a>
+            </div>
+        </div>
+        <hr class="d-lg-block d-none" style="border: 2px solid black; opacity: 1;">
+        <hr class="d-lg-none d-block" style="opacity: 1;">
+    </div>
+    <footer class="custom-footer container mb-5">
+        <div class="row">
+            <div class="col-lg-12 col-12 me-3 d-flex justify-content-between">
+                <a href="#">
+                    <svg width="243" height="29" viewBox="0 0 243 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 1.20601H0.666073C2.33384 1.20601 3.54594 1.58288 4.33335 2.35674C5.12076 3.12306 5.51834 4.30896 5.51834 5.9132V23.4468C5.51834 25.0435 5.12076 26.2231 4.32689 26.997C3.53174 27.7708 2.31318 28.1615 0.666073 28.1615H0V28.8876H17.6806V28.1615H15.9858C14.3554 28.1615 13.1343 27.7721 12.3404 26.997C11.553 26.2231 11.149 25.0435 11.149 23.4468V14.5135H12.4695C14.491 14.5135 16.0516 15.1618 17.1294 16.4582C17.6425 17.0622 18.0475 17.746 18.3273 18.4808C18.6333 19.2421 18.8747 20.2597 19.0722 21.5436H19.7821V6.68078H19.1147C18.6823 9.19078 17.9659 11.0111 16.9732 12.1342C15.987 13.2573 14.6046 13.8226 12.8309 13.8226H11.149V1.20601H17.4689C19.0502 1.20601 20.4611 1.42208 21.7029 1.8467C22.9141 2.27031 24.0155 2.94647 24.93 3.82782C25.8374 4.71348 26.6107 5.84411 27.2406 7.21092C27.4613 7.65061 27.6885 8.2712 27.9221 9.07269C28.1493 9.87544 28.3546 10.7611 28.5469 11.7297H29.1781V0.508784H0V1.20601ZM62.9026 27.8487C62.363 27.6477 61.8867 27.3123 61.4543 26.8512C60.9806 26.3304 60.591 25.7424 60.299 25.1076L48.391 0H47.681L38.0501 21.0838C36.767 23.8953 35.4464 25.806 34.1001 26.8173C33.5244 27.257 33.0145 27.5635 32.5459 27.7444C32.0851 27.9392 31.4539 28.0723 30.6665 28.1565V28.8814H41.5186V28.1565C41.125 28.1412 40.7335 28.0946 40.3478 28.017C40.0199 27.9201 39.7056 27.7843 39.4119 27.6125C38.8943 27.3324 38.4825 26.9078 38.1495 26.3638C37.8306 25.7985 37.659 25.2332 37.659 24.6616C37.659 23.9995 37.8009 23.3362 38.0785 22.6817L40.0999 18.315H51.4116L53.0212 21.6905C53.1142 21.8576 53.1994 22.026 53.2768 22.1993C53.3543 22.3677 53.4059 22.4933 53.4472 22.5699C54.072 23.8739 54.476 24.7659 54.6606 25.2545C54.8439 25.757 54.9368 26.1678 54.9368 26.5171C54.9368 27.0749 54.7032 27.4869 54.2346 27.7444C53.7738 28.0233 53.0367 28.1565 52.0286 28.1565H50.0071V28.8814H65.4972V28.1565H64.7872C64.0579 28.1565 63.4331 28.051 62.9026 27.8487ZM40.433 17.6316L45.6609 6.06772L51.0295 17.6316H40.433ZM96.9382 20.575C96.569 21.4883 96.1856 22.2697 95.7751 22.9116C95.3711 23.5523 94.8948 24.2081 94.3552 24.8576C93.5019 25.8891 92.4274 26.7269 91.2068 27.3123C90.0151 27.8969 88.6986 28.2003 87.364 28.198H80.4412V5.91446C80.4412 4.31022 80.8388 3.12557 81.6249 2.35799C82.4124 1.59042 83.6322 1.20726 85.2651 1.20726H87.2078V0.523859H69.016V1.20726H69.9661C73.1932 1.20726 74.8106 2.78261 74.8106 5.91446V23.448C74.8106 26.6138 73.1932 28.1967 69.9661 28.1967H68.9657L69.016 28.8876H98.7389V17.4155H98.0225C97.6752 18.6089 97.3138 19.6541 96.9382 20.575ZM202.408 4.79011C200.932 3.34039 199.131 2.26503 196.989 1.56153C194.839 0.870586 192.329 0.508784 189.457 0.508784H171.754V1.20601H172.726C174.378 1.20601 175.606 1.58288 176.393 2.35674C177.181 3.12306 177.57 4.30896 177.57 5.9132V23.4468C177.57 25.0435 177.181 26.2231 176.385 26.997C175.584 27.7708 174.372 28.1615 172.726 28.1615H171.754V28.8876H190.719C192.974 28.8876 195.088 28.5798 197.031 27.9593C198.982 27.3525 200.337 26.4806 201.754 25.3588C203.138 24.2732 204.261 22.9068 205.046 21.3551C205.826 19.8062 206.209 16.8979 206.209 15.0776C206.209 13.4244 205.854 10.5865 205.131 9.01742C204.415 7.44709 203.727 6.03255 202.408 4.79011ZM196.761 25.693C196.189 26.285 195.512 26.7715 194.762 27.1289C194.003 27.4995 193.102 27.757 192.081 27.9178C191.066 28.0774 189.826 28.1615 188.364 28.1615H183.209V1.20601H188.024C189.457 1.20601 190.691 1.28892 191.719 1.44344C192.74 1.61052 193.641 1.86805 194.421 2.23111C195.208 2.60045 195.911 3.0816 196.535 3.67581C197.297 4.4195 197.929 5.27867 198.407 6.21973C198.896 7.18328 199.28 8.29884 199.542 9.56137C199.805 10.8302 199.932 13.4043 199.932 14.8201C199.932 19.1642 198.882 23.6013 196.761 25.693ZM241.969 28.1565C241.239 28.1565 240.614 28.051 240.082 27.8487C239.525 27.633 239.029 27.2911 238.635 26.8512C238.21 26.3915 237.827 25.8199 237.48 25.1076L225.578 0H224.869L215.231 21.0838C213.946 23.8877 212.627 25.806 211.279 26.8249C210.699 27.2558 210.187 27.5635 209.72 27.7444C209.259 27.9329 208.628 28.0723 207.841 28.1565V28.8814H218.706V28.1565C218.31 28.142 217.916 28.0954 217.528 28.017C217.202 27.9213 216.89 27.7854 216.599 27.6125C216.069 27.3144 215.63 26.8832 215.33 26.3638C215.011 25.7985 214.841 25.2332 214.841 24.6616C214.841 23.9995 214.983 23.3362 215.266 22.6817L217.287 18.315H228.586L230.202 21.6905C230.301 21.8576 230.372 22.026 230.457 22.1993L230.628 22.5699C231.253 23.8739 231.657 24.7659 231.848 25.2621C232.025 25.757 232.117 26.1678 232.117 26.5171C232.117 27.0749 231.884 27.4869 231.422 27.7444C230.961 28.0233 230.216 28.1565 229.217 28.1565H227.195V28.8814H242.678V28.1565H241.969ZM217.614 17.6316L222.84 6.06144L228.202 17.6316H217.614ZM113.158 0.523859H105.753V1.20726H106.492C108.136 1.20726 109.357 1.59042 110.145 2.36428C110.923 3.12431 111.328 4.31148 111.328 5.922V23.448C111.328 25.0447 110.923 26.2244 110.129 26.9982C109.335 27.7721 108.122 28.1628 106.492 28.1628H105.753V28.8876H122.547V28.1628H121.811C120.18 28.1628 118.974 27.7733 118.171 26.9982C117.377 26.2244 116.981 25.0447 116.981 23.448V5.922C116.981 4.31022 117.371 3.12431 118.165 2.36428C118.96 1.59042 120.166 1.20726 121.81 1.20726H122.548V0.523859H113.158ZM152.407 1.20726C153.286 1.26254 153.974 1.36053 154.463 1.48615C154.954 1.61178 155.443 1.82032 155.924 2.11428C156.825 2.6507 157.513 3.42456 157.988 4.44338C158.471 5.46095 158.713 6.6544 158.713 8.0212V25.0246L139.102 0.523859H128.988V1.2148H128.966C130.754 1.2148 132.35 1.91077 133.464 3.13813L133.825 3.57782C134.619 4.64564 135.094 6.03255 135.094 7.6795V22.5762C135.094 23.7897 134.882 24.801 134.456 25.6163C134.024 26.4404 133.364 27.0472 132.471 27.4656C131.57 27.8839 130.414 28.1276 128.988 28.198V28.8889H142.91V28.198C141.903 28.1628 141.144 28.1 140.612 28.0158C139.648 27.8977 138.825 27.6465 138.151 27.2558C137.332 26.7574 136.698 26.017 136.342 25.1427C135.989 24.2433 135.79 23.0573 135.79 21.5586V5.96345L154.641 28.8876H163.606V28.1967H163.649C160.946 28.1967 159.45 27.0673 159.45 23.7621V8.15939C159.45 5.8931 159.953 4.17706 160.96 2.98487C161.975 1.80022 163.436 1.20726 165.358 1.20726H165.62V0.523859H152.407V1.20726Z" fill="black"/>
+                    </svg>
+                </a>
+                <div class="navigation d-lg-none d-block">
+                    <ul class="navbar-nav ms-auto flex-row justify-content-end gap-5">
+                        <div class="col-4 col-lg-6 d-flex flex-column flex-lg-row">
+                            <li class="nav-item"><a href="#main" class="nav-link">ГЛАВНАЯ</a></li>
+                            <li class="nav-item"><a href="#spring-coll" class="nav-link">ВЕСНА 2025</a></li>
+                            <li class="nav-item"><a href="#autumn-coll" class="nav-link">ОСЕНЬ 2025</a></li>
+                        </div>
+                        <div class="col-4 col-lg-6 d-flex flex-column flex-lg-row">
+                            <li class="nav-item"><a href="#about-us" class="nav-link">О НАС</a></li>
+                            <li class="nav-item"><a href="#contacts" class="nav-link">КОНКТАКТЫ</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#orderModal">СДЕЛАТЬ ЗАКАЗ</a></li>
+                        </div>
+                    </ul>
+                </div>
+                <div class="navigation d-lg-block d-none">
+                    <ul class="navbar-nav ms-auto flex-row justify-content-end gap-5">
+                        <li class="nav-item"><a href="#main" class="nav-link">ГЛАВНАЯ</a></li>
+                        <li class="nav-item"><a href="#spring-coll" class="nav-link">ВЕСНА 2025</a></li>
+                        <li class="nav-item"><a href="#autumn-coll" class="nav-link">ОСЕНЬ 2025</a></li>
+                        <li class="nav-item"><a href="#about-us" class="nav-link">О НАС</a></li>
+                        <li class="nav-item"><a href="#contacts" class="nav-link">КОНКТАКТЫ</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#orderModal">СДЕЛАТЬ ЗАКАЗ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/jquery.inputmask.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
